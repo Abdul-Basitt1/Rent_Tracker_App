@@ -9,43 +9,40 @@ import { appStyles } from '../../../../Utilities/appStyles/appStyles'
 
 export const SplashComponent = () => {
     return (
-        <>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Image source={Images.splashLogo} style={styles.splashLogo} />
-                <Spacer />
-                <ResponsiveText style={styles.appNameText}>Rent Tracker</ResponsiveText>
-                <Spacer height={hp(0.5)} />
-                <ResponsiveText style={styles.splashText1}>Smart Rent Management</ResponsiveText>
-                <Spacer />
-                <ResponsiveText numberOfLines={2} style={styles.splashText2}>Track, manage and never miss your monthly rent payments</ResponsiveText>
-                <Spacer height={hp(6)} />
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+            <Image source={Images.splashLogo} style={styles.splashLogo} />
+            <Spacer />
+            <ResponsiveText style={styles.appNameText}>Rent Tracker</ResponsiveText>
+            <Spacer height={hp(0.5)} />
+            <ResponsiveText style={styles.splashText1}>Smart Rent Management</ResponsiveText>
+            <Spacer />
+            <ResponsiveText numberOfLines={2} style={styles.splashText2}>Track, manage and never miss your monthly rent payments</ResponsiveText>
+            <Spacer height={hp(6)} />
 
-                <View style={{ ...appStyles.rowBasic }}>
-                    <Image source={Images.tickIcon} style={styles.tickIcon} />
-                    <ResponsiveText style={styles.readyText}>Ready</ResponsiveText>
-                </View>
+            <View style={{ ...appStyles.rowBasic, alignSelf: 'center' }}>
+                <Image source={Images.tickIcon} style={styles.tickIcon} />
+                <ResponsiveText style={styles.readyText}>Ready</ResponsiveText>
             </View>
-
-            <ResponsiveText style={styles.readyText}>Version 1.0.0</ResponsiveText>
-        </>
+        </View>
     )
 }
-
 
 const styles = StyleSheet.create({
     splashLogo: {
         width: wp(24),
         height: wp(24),
         resizeMode: 'contain',
+        alignSelf: 'center',
     },
     appNameText: {
         color: Colors.colorDark,
         fontSize: 28,
-        fontFamily: Fonts.appTextBold
+        fontFamily: Fonts.appTextBold,
+        textAlign: 'center',
     },
     tickIcon: {
-        width: wp(3.5),
-        height: wp(3.5),
+        width: wp(3.4),
+        height: wp(3.4),
         resizeMode: 'contain',
         marginRight: wp(2),
         tintColor: Colors.bluish
@@ -53,19 +50,19 @@ const styles = StyleSheet.create({
     splashText1: {
         color: Colors.mediumGray,
         fontSize: 20,
-        fontFamily: Fonts.appTextMedium
+        fontFamily: Fonts.appTextMedium,
+        textAlign: 'center',
     },
     splashText2: {
         color: Colors.lightGray,
         fontSize: 16,
         textAlign: 'center',
         paddingHorizontal: wp(4),
-        fontFamily: Fonts.appTextRegular
+        fontFamily: Fonts.appTextRegular,
     },
     readyText: {
-        color: Colors.lightGray,
+        color: Colors.bluish,
         fontFamily: Fonts.appTextMedium,
         fontSize: 15,
-        paddingBottom: hp(2)
     },
 })

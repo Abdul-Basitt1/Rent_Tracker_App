@@ -1,10 +1,16 @@
 import { StyleSheet } from 'react-native'
-import { wp } from '../../../Components/ResponsiveComponent'
+import { hp } from '../../../Components/ResponsiveComponent'
+import { Colors, Fonts } from '../../../Constants'
 
 export const styles = StyleSheet.create({
     containerMain: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+    },
+    readyText: {
+        color: Colors.lightGray,
+        fontFamily: Fonts.appTextMedium,
+        fontSize: 15,
+        paddingBottom: hp(2),
+        alignSelf: 'center',
     },
 })

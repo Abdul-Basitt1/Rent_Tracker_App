@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-    Image,
-    StyleSheet,
-    View,
-    ImageStyle,
-    StyleProp,
-    ViewStyle,
-    Animated,
-} from 'react-native';
+import { Image, StyleSheet, View, ImageStyle, StyleProp, ViewStyle, Animated } from 'react-native';
 import { Images } from '../../../../Images';
 import { hp, wp } from '../../../../Components/ResponsiveComponent';
 import ResponsiveText from '../../../../Components/ResponsiveText';

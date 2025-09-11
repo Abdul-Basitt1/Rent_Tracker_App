@@ -7,8 +7,8 @@
     </style>
 
     <!-- BootTheme used only at app startup -->
-     <style name="BootTheme" parent="Theme.AppCompat.Light.NoActionBar">
+     <!-- <style name="BootTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/bootsplash</item>
-    </style>
+    </style> -->
 
 </resources>

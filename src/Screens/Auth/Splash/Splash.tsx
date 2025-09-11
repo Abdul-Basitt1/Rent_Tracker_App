@@ -5,20 +5,20 @@ import { MainContainer } from '../../../Components/MainContainer'
 import { SplashComponent } from './Components'
 import ResponsiveText from '../../../Components/ResponsiveText'
 import { Routes } from '../../../Constants'
+import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { AuthStackParamList } from '../../../Navigation/types'
 
-type SplashProps = {
-    props: any
-}
+type SplashProps = NativeStackScreenProps<AuthStackParamList, 'Splash'>
 
-const Splash: React.FC<SplashProps> = ({ props }) => {
+const Splash: React.FC<SplashProps> = ({ navigation }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
-            props?.navigation?.replace(Routes.AppNavigator);
-        }, 3000);
+            navigation?.replace(Routes.OnBoarding);
+        }, 2000);
 
         // ✅ cleanup on unmount to avoid memory leaks
         return () => clearTimeout(timer);
-    }, [props]);
+    }, [navigation]);
 
     return (
         <MainContainer>

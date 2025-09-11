@@ -5,7 +5,6 @@ import Svg, { Defs, RadialGradient, Rect, Stop, ClipPath, Circle } from "react-n
 type MainContainerProps = {
     children: ReactNode;
 } & ViewProps;
-
 export const MainContainer = ({ children, ...props }: MainContainerProps) => {
     return (
         <View style={styles.container} {...props}>

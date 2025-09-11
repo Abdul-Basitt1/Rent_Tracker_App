@@ -11,6 +11,8 @@
 		0C80B921A6F3F58F76C31292 /* libPods-Rent_Tracker_App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Rent_Tracker_App.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		35AB68DA61F44100BC77026C /* Ubuntu-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 031122CEADD2461EA5F7AF43 /* Ubuntu-Medium.ttf */; };
+		4503485A3C664BAAA1C322E1 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F79A7544D3644239307C42E /* Colors.xcassets */; };
+		4EF3328FDAD14892B06E103F /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AD632A1EADC483DB444A59D /* BootSplash.storyboard */; };
 		6744AA438877405CA2B193B5 /* Anta-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0366C6F3923941E8AD150735 /* Anta-Regular.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -30,7 +32,9 @@
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Rent_Tracker_App/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1844CD016EC745FA95B21FD3 /* Ubuntu-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Italic.ttf"; path = "../src/Constants/Fonts/Ubuntu-Italic.ttf"; sourceTree = "<group>"; };
 		234B9A22022F45B1ACCB1908 /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Regular.ttf"; path = "../src/Constants/Fonts/Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
+		2F79A7544D3644239307C42E /* Colors.xcassets */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Rent_Tracker_App/Colors.xcassets; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Rent_Tracker_App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rent_Tracker_App.debug.xcconfig"; path = "Target Support Files/Pods-Rent_Tracker_App/Pods-Rent_Tracker_App.debug.xcconfig"; sourceTree = "<group>"; };
+		4AD632A1EADC483DB444A59D /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = Rent_Tracker_App/BootSplash.storyboard; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Rent_Tracker_App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Rent_Tracker_App.release.xcconfig"; path = "Target Support Files/Pods-Rent_Tracker_App/Pods-Rent_Tracker_App.release.xcconfig"; sourceTree = "<group>"; };
 		57E707F501E141F29C09D9EA /* index.tsx */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = index.tsx; path = ../src/Constants/Fonts/index.tsx; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Rent_Tracker_App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Rent_Tracker_App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +65,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
+				4AD632A1EADC483DB444A59D /* BootSplash.storyboard */,
+				2F79A7544D3644239307C42E /* Colors.xcassets */,
 			);
 			name = Rent_Tracker_App;
 			sourceTree = "<group>";
@@ -198,6 +204,8 @@
 				35AB68DA61F44100BC77026C /* Ubuntu-Medium.ttf in Resources */,
 				F7B3D974A59E49E2ABB9D925 /* Ubuntu-Regular.ttf in Resources */,
 				0A118A899C554D67A2144981 /* index.tsx in Resources */,
+				4EF3328FDAD14892B06E103F /* BootSplash.storyboard in Resources */,
+				4503485A3C664BAAA1C322E1 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

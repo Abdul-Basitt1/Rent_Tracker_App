@@ -3,4 +3,5 @@ export const Routes = {
     AppNavigator: "AppNavigator",
     Splash: "Splash",
     OnBoarding: "OnBoarding",
+    Home: "Home"
 } as const

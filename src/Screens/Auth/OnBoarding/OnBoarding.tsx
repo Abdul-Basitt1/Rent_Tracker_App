@@ -5,6 +5,7 @@ import { AuthStackParamList } from '../../../Navigation/types'
 import { MainContainer } from '../../../Components/MainContainer'
 import { Images } from '../../../Images'
 import Onboarding from 'react-native-onboarding-swiper'
+import { Routes } from '../../../Constants'
 
 type OnBoardingProps = NativeStackScreenProps<AuthStackParamList, 'OnBoarding'>
 
@@ -32,6 +33,9 @@ const OnBoarding: React.FC<OnBoardingProps> = ({ navigation }) => {
                         subtitle: 'Done with React Native Onboarding Swiper',
                     },
                 ]}
+                // onDone={() => navigation?.navigate?.(Routes.AppNavigator, { screen: Routes.Home })}
+                onDone={() => navigation?.navigate?.(Routes.Splash)}
+
             />
         </MainContainer>
     )

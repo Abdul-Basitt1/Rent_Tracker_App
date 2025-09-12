@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Easing, View } from 'react-native';
+import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { styles } from './styles';
 import { MainContainer } from '../../../Components/MainContainer';
 import { SplashComponent } from './Components';
@@ -9,20 +9,25 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { AuthStackParamList } from '../../../Navigation/types';
 import AnimatedBootSplash from '../../../Animations/AnimatedBootSplash';
 import { hp } from '../../../Components/ResponsiveComponent';
+import WaveRevealOverlay from '../../../Animations/WaveRevealOverlay';
 
 type SplashProps = NativeStackScreenProps<AuthStackParamList, 'Splash'>;
 
 //Can change these values to adjust animation
 const LIFT_DISTANCE = hp(14);   // distance the logo should travel up
 const OVERLAY_DURATION = 480;  // native overlay fade/move
-const JS_LOGO_DELAY = 100;     // slight delay before JS logo appears
-const JS_LOGO_FADE = 300;      // JS logo fade-in duration
+const JS_LOGO_DELAY = 150;     // slight delay before JS logo appears
+const JS_LOGO_FADE = 350;      // JS logo fade-in duration
 const TEXT_DELAY = 180;        // when text starts (during the transition)
-const TEXT_DURATION = 560;     // silky text ease
-const NAV_DELAY = 2500;        // navigate after (same as before)
+const TEXT_DURATION = 640;     // silky text ease
+const NAV_DELAY = 3000;        // navigate after (same as before)
+// NEW: slow & smooth background fill timing
+const WAVE_DURATION = 1400;  // wave speed
+const WAVE_DELAY = 100;       // tiny delay to start with the logo blend
 
 const Splash: React.FC<SplashProps> = ({ navigation }) => {
     const [overlayGone, setOverlayGone] = useState(false);
+    const [bgPlay, setBgPlay] = useState(false); // 👈 start background fill
 
     // JS logo starts LOWER (same as native), then animates up to 0 
     const logoOpacity = useRef(new Animated.Value(0)).current;
@@ -38,6 +43,9 @@ const Splash: React.FC<SplashProps> = ({ navigation }) => {
     //    - begin text fade/float (will show as overlay fades)
 
     const handleBlendStart = () => {
+        // Start background fill at the same moment
+        setBgPlay(true)
+
         Animated.parallel([
             Animated.timing(logoOpacity, {
                 toValue: 1,
@@ -88,19 +96,29 @@ const Splash: React.FC<SplashProps> = ({ navigation }) => {
 
     return (
         <MainContainer>
+            {/* 🔹 Smooth wave reveal sits ABOVE gradient, BELOW content */}
+            <WaveRevealOverlay
+                play={bgPlay}
+                duration={WAVE_DURATION}
+                delay={WAVE_DELAY}
+                centerYFrac={0.48}  // tweak to align behind your logo
+                amp={16}            // wave subtlety
+                swayPx={6}
+            />
+
+            {/* your existing content (unchanged) */}
             <View style={styles.containerMain}>
                 <SplashComponent
-                    logoStyle={logoStyle as any}                 // JS logo fades in & slides up
+                    logoStyle={logoStyle as any}
                     textContainerStyle={textContainerStyle as any}
                 />
             </View>
 
-            {/* Footer version text synced with same animation */}
             <Animated.View style={{ opacity: textOpacity, transform: [{ translateY: textLift }] }}>
                 <ResponsiveText style={styles.readyText}>Version 1.0.0</ResponsiveText>
             </Animated.View>
 
-            {/* Native overlay on top that fades & moves up the SAME distance */}
+            {/* Native overlay stays on top until it finishes (unchanged) */}
             {!overlayGone && (
                 <AnimatedBootSplash
                     onBlendStart={handleBlendStart}

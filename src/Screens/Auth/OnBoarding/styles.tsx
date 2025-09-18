@@ -1,98 +1,89 @@
-import { StyleSheet } from 'react-native';
-import { hp, wp } from '../../../Components/ResponsiveComponent';
-
-// Subtle, modern palette (dark base + warm accent)
-export const PALETTE = {
-    bg: '#0F172A',          // deep slate
-    card: '#111B2E',        // slightly lighter than bg
-    cardBorder: '#1E2A44',  // thin outline
-    text: '#E5E7EB',        // primary text
-    subtext: '#9CA3AF',     // secondary text
-    accent: '#FF5E7A',      // warm coral accent
-    accentText: '#0B1220',  // dark text on accent
-    dotIdle: '#2C3A54',     // inactive dot
-    ghostBtnBg: 'rgba(255,255,255,0.06)',
-    ghostBtnBorder: 'rgba(255,255,255,0.10)',
-};
+import { StyleSheet } from "react-native";
+import { hp, wp } from "../../../Components/ResponsiveComponent";
+import { Colors, Fonts } from "../../../Constants";
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: PALETTE.bg,
         paddingHorizontal: wp(6),
+        backgroundColor: "transparent",
     },
-
     imageContainer: {
         height: hp(42),
-        justifyContent: 'center',
-        alignItems: 'center',
+        alignSelf: "center",
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: hp(4),
     },
-
-    // “Glass” hero card for the image (subtle, not flashy)
-    heroCard: {
-        width: '100%',
-        height: '100%',
-        borderRadius: wp(5),
-        backgroundColor: PALETTE.card,
-        borderWidth: 1,
-        borderColor: PALETTE.cardBorder,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: wp(4),
-        shadowColor: '#000',
-        shadowOpacity: 0.25,
-        shadowRadius: 12,
-        shadowOffset: { width: 0, height: 6 },
-        elevation: 6,
+    heroWrapper: {
+        width: wp(70),
+        height: wp(70),
+        borderRadius: wp(35),
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(255,255,255,0.15)",
+        shadowColor: Colors.primary,
+        shadowOpacity: 0.12,
+        shadowRadius: 25,
+        shadowOffset: { width: 0, height: 10 },
     },
-
     heroImage: {
-        width: '90%',
-        height: '90%',
+        width: "75%",
+        height: "75%",
     },
-
     title: {
-        color: PALETTE.text,
-        fontSize: wp(6.5),
-        fontWeight: '800',
-        letterSpacing: 0.2,
-        textAlign: 'center',
-        marginTop: hp(3),
+        color: Colors.textPrimary,
+        fontSize: wp(7),
+        fontWeight: "800",
+        textAlign: "center",
     },
 
     subtitle: {
-        color: PALETTE.subtext,
+        color: Colors.textSecondary,
+        fontSize: wp(3.9),
+        lineHeight: wp(5.6),
+        textAlign: "center",
+    },
+
+    // Bottom buttons
+    skipBtn: {
+        paddingVertical: hp(1),
+        paddingHorizontal: wp(2),
+        marginStart: wp(2.5),
+        minWidth: wp(16),
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    skipText: {
+        color: Colors.textSecondary,
+        fontSize: wp(3.6),
+        fontFamily: Fonts.appTextMedium
+    },
+    nextBtn: {
+        paddingVertical: hp(0.8),
+        borderRadius: wp(20),
+        borderWidth: 1.8,
+        borderColor: Colors.primary,
+        minWidth: wp(18),
+        marginEnd: wp(2),
+        alignItems: "center",
+    },
+    nextText: {
+        color: Colors.primary,
         fontSize: wp(3.8),
-        lineHeight: wp(5.4),
-        textAlign: 'center',
-        marginTop: hp(1.5),
-        paddingHorizontal: wp(4),
+        fontFamily: Fonts.appTextMedium
     },
-
-    // Bottom nav buttons
-    navBtn: {
-        paddingVertical: hp(1.6),
-        paddingHorizontal: wp(5),
-        borderRadius: wp(3),
-        marginHorizontal: wp(1.5),
+    doneBtn: {
+        paddingVertical: hp(1),
+        borderRadius: wp(20),
+        backgroundColor: Colors.primary,
+        minWidth: wp(27),
+        alignItems: "center",
+        marginEnd: wp(2),
     },
-    navBtnGhost: {
-        backgroundColor: PALETTE.ghostBtnBg,
-        borderWidth: 1,
-        borderColor: PALETTE.ghostBtnBorder,
-    },
-    navBtnPrimary: {
-        backgroundColor: PALETTE.accent,
-    },
-
-    navText: {
-        fontWeight: '800',
-        letterSpacing: 0.2,
-    },
-    navTextGhost: {
-        color: PALETTE.text,
-    },
-    navTextPrimary: {
-        color: PALETTE.accentText,
+    doneText: {
+        color: Colors.white,
+        fontSize: wp(3.5),
+        fontFamily: Fonts.appTextMedium,
     },
 });

@@ -15,15 +15,15 @@ type SplashProps = NativeStackScreenProps<AuthStackParamList, 'Splash'>;
 
 //Can change these values to adjust animation
 const LIFT_DISTANCE = hp(14);   // distance the logo should travel up
-const OVERLAY_DURATION = 480;  // native overlay fade/move
-const JS_LOGO_DELAY = 150;     // slight delay before JS logo appears
+const OVERLAY_DURATION = 580;  // native overlay fade/move
+const JS_LOGO_DELAY = 250;     // slight delay before JS logo appears
 const JS_LOGO_FADE = 350;      // JS logo fade-in duration
-const TEXT_DELAY = 180;        // when text starts (during the transition)
-const TEXT_DURATION = 640;     // silky text ease
+const TEXT_DELAY = 280;        // when text starts (during the transition)
+const TEXT_DURATION = 840;     // silky text ease
 const NAV_DELAY = 3000;        // navigate after (same as before)
 // NEW: slow & smooth background fill timing
-const WAVE_DURATION = 1400;  // wave speed
-const WAVE_DELAY = 100;       // tiny delay to start with the logo blend
+const WAVE_DURATION = 3000;  // wave speed
+const WAVE_DELAY = 250;       // tiny delay to start with the logo blend
 
 const Splash: React.FC<SplashProps> = ({ navigation }) => {
     const [overlayGone, setOverlayGone] = useState(false);
@@ -99,6 +99,7 @@ const Splash: React.FC<SplashProps> = ({ navigation }) => {
             {/* 🔹 Smooth wave reveal sits ABOVE gradient, BELOW content */}
             <WaveRevealOverlay
                 play={bgPlay}
+                color="rgba(255,255,255,0.9)"
                 duration={WAVE_DURATION}
                 delay={WAVE_DELAY}
                 centerYFrac={0.48}  // tweak to align behind your logo

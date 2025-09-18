@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     readyText: {
-        color: Colors.lightGray,
+        color: Colors.textSecondary, // was lightGray
         fontFamily: Fonts.appTextMedium,
         fontSize: 15,
         paddingBottom: hp(2),

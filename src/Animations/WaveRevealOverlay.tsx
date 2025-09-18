@@ -1,42 +1,42 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Animated, Dimensions, Easing, StyleSheet } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Defs, LinearGradient, Path, Stop } from 'react-native-svg';
+import { Colors } from '../Constants';
 
 type Props = {
-    play: boolean;               // start the reveal
-    duration?: number;           // total time (ms), slow & smooth
-    delay?: number;              // small delay to sync with logo blend start
-    color?: string;              // white “water” color (match native)
-    centerYFrac?: number;        // where the wave starts vertically (0..1)
-    amp?: number;                // wave amplitude (px) – subtle
-    wavelengthPx?: number;       // distance between crests (px)
-    swayPx?: number;             // tiny horizontal sway (px)
+    play: boolean;
+    duration?: number;
+    delay?: number;
+    /** If provided, uses solid fill; if undefined, uses branded gradient */
+    color?: string;
+    centerYFrac?: number;
+    amp?: number;
+    wavelengthPx?: number;
+    swayPx?: number;
 };
 
-/**
- * Two white covers with a wavy edge sit at the center and slide
- * upward and downward to reveal your gradient from the middle.
- * - GPU-friendly (translate + opacity with native driver)
- * - Gentle “sea” motion (small horizontal sway)
- * - Lives BELOW content, ABOVE gradient
- */
 export default function WaveRevealOverlay({
     play,
-    duration = 1400,
-    delay = 100,
-    color = '#FFFFFF',
-    centerYFrac = 0.48,      // slightly above center; tweak to sit behind your logo
-    amp = 16,                // subtle wave height
-    wavelengthPx,            // default set below using screen width
-    swayPx = 6,              // gentle side-to-side
+    duration = 6000,
+    delay = 200,
+    color, // ← no default; gradient is default
+    centerYFrac = 0.48,
+    amp = 16,
+    wavelengthPx,
+    swayPx = 6,
 }: Props) {
     const { width, height } = Dimensions.get('window');
+
+    // Add horizontal padding wider than sway so the overlay never exposes edges.
+    const padX = Math.max(10, Math.ceil(swayPx) + 6); // sway + safety
+    const svgW = width + padX * 2; // draw wider than screen
+
     const wavelength = wavelengthPx ?? Math.max(120, Math.floor(width / 2.6));
     const centerY = Math.max(0, Math.min(1, centerYFrac)) * height;
 
-    // ------- Animated drivers (native) -------
+    // ------- Animated drivers -------
     const progress = useRef(new Animated.Value(0)).current; // 0 -> 1
-    const sway = useRef(new Animated.Value(0)).current; // 0 -> 1
+    const sway = useRef(new Animated.Value(0)).current;     // 0 -> 1
 
     useEffect(() => {
         if (!play) return;
@@ -48,10 +48,9 @@ export default function WaveRevealOverlay({
                 toValue: 1,
                 duration,
                 delay,
-                easing: Easing.bezier(0.22, 0.61, 0.36, 1), // standard ease-out
+                easing: Easing.bezier(0.22, 0.61, 0.36, 1),
                 useNativeDriver: true,
             }),
-            // single gentle sway across duration
             Animated.timing(sway, {
                 toValue: 1,
                 duration,
@@ -62,21 +61,20 @@ export default function WaveRevealOverlay({
         ]).start();
     }, [play, delay, duration, progress, sway]);
 
-    // Move up/down from center until fully off-screen
+    // Travel + sway
     const travel = height / 2 + 60;
     const upY = progress.interpolate({ inputRange: [0, 1], outputRange: [0, -travel] });
     const downY = progress.interpolate({ inputRange: [0, 1], outputRange: [0, travel] });
     const xSway = sway.interpolate({ inputRange: [0, 1], outputRange: [-swayPx, swayPx] });
     const fade = progress.interpolate({ inputRange: [0, 0.85, 1], outputRange: [1, 0.25, 0] });
 
-    // ------- Build one wavy edge path (at rest at centerY) -------
+    // ------- Build wave path (draw beyond right edge) -------
     const wavePath = useMemo(() => {
-        // Draw a horizontal wave across the screen at y = centerY
-        // Upper path will fill ABOVE this wave; lower path will fill BELOW it.
-        let d = `M 0 ${centerY} `;
-        let x = 0;
-        let dir = 1; // crest↔trough toggle
-        while (x <= width) {
+        const extra = wavelength; // ensure we overshoot
+        let d = `M ${-padX} ${centerY} `;
+        let x = -padX;
+        let dir = 1;
+        while (x <= svgW + extra) {
             const cx = x + wavelength / 2;
             const cy = centerY + dir * amp;
             const nx = x + wavelength;
@@ -85,39 +83,58 @@ export default function WaveRevealOverlay({
             dir *= -1;
         }
         return d;
-    }, [amp, centerY, wavelength, width]);
+    }, [amp, centerY, wavelength, svgW, padX]);
 
-    // Upper cover: from top down to the wave
-    const upperPath = `${wavePath} L ${width} 0 L 0 0 Z`;
-    // Lower cover: from bottom up to the wave (reverse fill)
-    const lowerPath = `${wavePath} L ${width} ${height} L 0 ${height} Z`;
+    // Use svgW to close shapes to the corners of the extended canvas
+    const upperPath = `${wavePath} L ${svgW} 0 L ${-padX} 0 Z`;
+    const lowerPath = `${wavePath} L ${svgW} ${height} L ${-padX} ${height} Z`;
+
+    // Reusable gradient id
+    const gradientId = 'waveGrad';
+
+    // Shared SVG content factory
+    const renderSvg = (d: string) => (
+        <Svg width={svgW} height={height} style={StyleSheet.absoluteFill}>
+            <Defs>
+                <LinearGradient id={gradientId} x1="0" y1="0" x2="1" y2="1">
+                    {/* Soft brand blend that matches MainContainer */}
+                    <Stop offset="0%" stopColor={Colors.primary} stopOpacity={0.28} />
+                    <Stop offset="100%" stopColor={Colors.secondary} stopOpacity={0.24} />
+                </LinearGradient>
+            </Defs>
+            <Path d={d} fill={color ?? `url(#${gradientId})`} />
+        </Svg>
+    );
+
+    // Note: we extend left/right by padX so even with sway we never expose edges.
+    const baseAbs = {
+        ...StyleSheet.absoluteFillObject as any,
+        left: -padX,
+        right: -padX,
+    };
 
     return (
         <>
-            {/* Upper white cover (slides UP) */}
+            {/* Upper cover (slides UP) */}
             <Animated.View
                 pointerEvents="none"
                 style={[
-                    StyleSheet.absoluteFillObject,
+                    baseAbs,
                     { transform: [{ translateY: upY }, { translateX: xSway }], opacity: fade, zIndex: 0 },
                 ]}
             >
-                <Svg width="100%" height="100%" style={StyleSheet.absoluteFill}>
-                    <Path d={upperPath} fill={color} />
-                </Svg>
+                {renderSvg(upperPath)}
             </Animated.View>
 
-            {/* Lower white cover (slides DOWN) */}
+            {/* Lower cover (slides DOWN) */}
             <Animated.View
                 pointerEvents="none"
                 style={[
-                    StyleSheet.absoluteFillObject,
+                    baseAbs,
                     { transform: [{ translateY: downY }, { translateX: xSway }], opacity: fade, zIndex: 0 },
                 ]}
             >
-                <Svg width="100%" height="100%" style={StyleSheet.absoluteFill}>
-                    <Path d={lowerPath} fill={color} />
-                </Svg>
+                {renderSvg(lowerPath)}
             </Animated.View>
         </>
     );
